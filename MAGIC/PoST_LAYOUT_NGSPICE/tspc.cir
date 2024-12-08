@@ -1,0 +1,136 @@
+postlayout
+
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+.global gnd vdd
+
+Vdd vdd gnd 'SUPPLY'
+Vclk clk 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk1 clk1 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk2 clk2 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk3 clk3 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vd d gnd pulse(1.8 0 3n 0 0 2n 4n)
+* Vd d gnd pulse(1.8 0 3n 0 0 2n 4n)
+* SPICE3 file created from f.ext - technology: scmos
+* SPICE3 file created from tspc.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 gnd a_171_n199# a_216_n198# Gnd CMOSN w=20 l=2
++  ad=600 pd=300 as=200 ps=100
+M1001 gnd a_111_n199# a_171_n199# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1002 gnd a_262_n131# qf Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1003 gnd a_245_n131# a_262_n131# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1004 a_245_n131# a_222_n132# vdd w_107_n34# CMOSP w=41 l=2
++  ad=205 pd=92 as=1205 ps=542
+M1005 qf a_262_n131# vdd w_107_n34# CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1006 gnd d a_111_n199# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1007 a_245_n198# clk a_245_n131# Gnd CMOSN w=20 l=2
++  ad=200 pd=100 as=100 ps=50
+M1008 gnd a_222_n132# a_245_n198# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1009 a_262_n131# a_245_n131# vdd w_107_n34# CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1010 a_111_n199# clk a_111_n128# w_103_n140# CMOSP w=39 l=2
++  ad=195 pd=88 as=395 ps=178
+M1011 a_171_n199# clk a_174_n23# w_170_n134# CMOSP w=39 l=2
++  ad=195 pd=88 as=395 ps=178
+M1012 a_111_n128# d vdd w_107_n34# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1013 a_174_n23# a_111_n199# vdd w_107_n34# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1014 a_216_n198# clk a_222_n132# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1015 a_222_n132# a_171_n199# vdd w_107_n34# CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+C0 a_111_n199# clk 0.05fF
+C1 vdd a_174_n23# 0.44fF
+C2 vdd a_262_n131# 0.44fF
+C3 a_222_n132# a_245_n131# 0.05fF
+C4 w_107_n34# a_174_n23# 0.08fF
+C5 w_107_n34# a_262_n131# 0.17fF
+C6 qf gnd 0.23fF
+C7 a_171_n199# clk 0.07fF
+C8 a_262_n131# a_245_n198# 0.16fF
+C9 w_103_n140# clk 0.10fF
+C10 a_171_n199# a_222_n132# 0.05fF
+C11 a_245_n131# a_262_n131# 0.18fF
+C12 w_170_n134# a_171_n199# 0.08fF
+C13 a_111_n199# a_174_n23# 0.05fF
+C14 w_107_n34# vdd 0.70fF
+C15 a_171_n199# a_216_n198# 0.08fF
+C16 vdd a_245_n131# 0.78fF
+C17 a_174_n23# a_171_n199# 0.40fF
+C18 w_107_n34# a_245_n131# 0.17fF
+C19 w_107_n34# a_111_n199# 0.09fF
+C20 a_262_n131# qf 0.13fF
+C21 a_245_n131# a_245_n198# 0.23fF
+C22 w_107_n34# d 0.09fF
+C23 w_107_n34# a_171_n199# 0.09fF
+C24 a_216_n198# gnd 0.24fF
+C25 vdd qf 0.44fF
+C26 a_222_n132# clk 0.02fF
+C27 a_262_n131# gnd 0.21fF
+C28 w_170_n134# clk 0.10fF
+C29 vdd a_111_n128# 0.44fF
+C30 a_111_n199# a_171_n199# 0.08fF
+C31 w_103_n140# a_111_n199# 0.08fF
+C32 w_107_n34# qf 0.08fF
+C33 w_107_n34# a_111_n128# 0.08fF
+C34 a_216_n198# clk 0.05fF
+C35 clk m2_246_n151# 0.03fF
+C36 a_222_n132# a_216_n198# 0.21fF
+C37 a_111_n199# a_111_n128# 0.40fF
+C38 w_170_n134# a_174_n23# 0.07fF
+C39 a_245_n198# gnd 0.21fF
+C40 clk m2_223_n153# 0.03fF
+C41 a_111_n128# d 0.05fF
+C42 a_111_n199# gnd 0.24fF
+C43 vdd a_222_n132# 0.41fF
+C44 w_103_n140# a_111_n128# 0.07fF
+C45 w_107_n34# a_222_n132# 0.17fF
+C46 clk a_245_n198# 0.05fF
+C47 d gnd 0.12fF
+C48 a_222_n132# a_245_n198# 0.08fF
+C49 a_171_n199# gnd 0.23fF
+* C50 m2_246_n151# Gnd 0.04fF **FLOATING
+* C51 m2_223_n153# Gnd 0.04fF **FLOATING
+C52 gnd Gnd 0.06fF
+C53 a_245_n198# Gnd 0.14fF
+C54 clk Gnd 0.41fF
+C55 d Gnd 0.36fF
+C56 a_216_n198# Gnd 0.24fF
+C57 qf Gnd 0.55fF
+C58 a_262_n131# Gnd 0.84fF
+C59 a_245_n131# Gnd 0.84fF
+C60 a_222_n132# Gnd 1.45fF
+C61 a_171_n199# Gnd 0.07fF
+C62 a_174_n23# Gnd 0.14fF
+C63 a_111_n128# Gnd 0.19fF
+C64 vdd Gnd 1.32fF
+C65 a_111_n199# Gnd 0.28fF
+C66 w_170_n134# Gnd 1.87fF
+C67 w_103_n140# Gnd 1.87fF
+C68 w_107_n34# Gnd 12.07fF
+.tran 0.1n 10n 
+.measure tran delayslh TRIG v(clk) VAL=0.9 RISE=1 TARG v(qf) VAL=0.9 fall=1
+.measure tran delayshl TRIG v(clk) VAL=0.9 RISE=2 TARG v(qf) VAL=0.9 rise=1
+.control
+set hcopypscolor =1
+set color1 =black 
+set color0 = white
+run
+* plot v(clk)+4 v(d)+2 v(out)
+* plot v(clk)+4 v(d)+2 v(out2)
+* plot v(clk)+4 v(d)+2 v(out3)
+plot v(clk)+4 v(d)+2 v(qf)
+.endc
+.end

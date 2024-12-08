@@ -1,0 +1,140 @@
+.include TSMC_180nm.txt
+
+
+.param LAMBDA=0.09u
+.param SUPPLY=1.8
+.param width=1.8u
+.param Wp = 2*width
+.param Wn = width
+.global gnd vdd
+
+Vdd vdd gnd 'SUPPLY'
+Va1 p1 gnd pulse(0 1.8 2n 0 0 2n 4n)
+Va2 p2 gnd pulse(0 1.8 2n 0 0 4n 8n)
+Va3 p3 gnd pulse(0 1.8 2n 0 0 8n 16n)
+Va4 p4 gnd pulse(0 1.8 2n 0 0 16n 32n)
+
+Vb1 c1 gnd pulse(0 1.8 2n 0 0 16n 32n)
+Vb2 c2 gnd pulse(0 1.8 2n 0 0 8n 16n)
+Vb3 c3 gnd pulse(0 1.8 2n 0 0 4n 8n)
+Vb4 c0 gnd pulse(0 1.8 2n 0 0 2n 4n)
+* SPICE3 file created from sumblock.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 s4 c3 p4 Vdd CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1001 a_n44_48# c2 vdd Vdd CMOSP w=40 l=2
++  ad=200 pd=90 as=800 ps=360
+M1002 s2 c1 p2 Vdd CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1003 s1 a_n42_399# p1 Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=95 ps=48
+M1004 a_n42_226# c1 vdd Vdd CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1005 s2 a_n42_226# p2 Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=95 ps=48
+M1006 a_n42_399# c0 gnd Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=380 ps=192
+M1007 s3 c2 p3 Vdd CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1008 s4 p4 c3 Vdd CMOSP w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+M1009 a_n42_226# c1 gnd Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=0 ps=0
+M1010 a_n44_48# c2 gnd Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=0 ps=0
+M1011 s4 a_n45_n107# p4 Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=95 ps=48
+M1012 s3 p3 a_n44_48# Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=0 ps=0
+M1013 a_n45_n107# c3 gnd Gnd CMOSN w=19 l=2
++  ad=190 pd=96 as=0 ps=0
+M1014 s3 a_n44_48# p3 Gnd CMOSN w=19 l=2
++  ad=0 pd=0 as=95 ps=48
+M1015 s1 p1 c0 Vdd CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1016 s4 p4 a_n45_n107# Gnd CMOSN w=19 l=2
++  ad=0 pd=0 as=0 ps=0
+M1017 s2 p2 c1 Vdd CMOSP w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+M1018 a_n45_n107# c3 vdd Vdd CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1019 a_n42_399# c0 vdd Vdd CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1020 s1 p1 a_n42_399# Gnd CMOSN w=19 l=2
++  ad=0 pd=0 as=0 ps=0
+M1021 s3 p3 c2 Vdd CMOSP w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+M1022 s2 p2 a_n42_226# Gnd CMOSN w=19 l=2
++  ad=0 pd=0 as=0 ps=0
+M1023 s1 c0 p1 Vdd CMOSP w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+C0 c2 vdd 0.03fF
+C1 p4 s4 0.98fF
+C2 vdd a_n45_n107# 0.45fF
+C3 c0 s1 0.52fF
+C4 a_n42_226# s2 0.20fF
+C5 a_n42_226# vdd 0.45fF
+C6 p3 s3 0.98fF
+C7 a_n44_48# gnd 0.22fF
+C8 c3 a_n45_n107# 0.05fF
+C9 c1 s2 0.52fF
+C10 p2 a_n42_226# 0.05fF
+C11 c2 a_n44_48# 0.05fF
+C12 c1 vdd 0.03fF
+C13 c3 p4 0.16fF
+C14 p1 a_n42_399# 0.05fF
+C15 a_n45_n107# gnd 0.22fF
+C16 c1 p2 0.16fF
+C17 a_n42_226# gnd 0.22fF
+C18 c0 p1 0.16fF
+C19 p1 s1 0.98fF
+C20 a_n44_48# s3 0.20fF
+C21 p4 a_n45_n107# 0.05fF
+C22 c3 s4 0.52fF
+C23 a_n42_399# vdd 0.45fF
+C24 p2 s2 0.98fF
+C25 p3 a_n44_48# 0.05fF
+C26 c2 s3 0.52fF
+C27 c3 vdd 0.03fF
+C28 c0 vdd 0.03fF
+C29 c1 a_n42_226# 0.05fF
+C30 c2 p3 0.16fF
+C31 a_n44_48# vdd 0.45fF
+C32 c0 a_n42_399# 0.05fF
+C33 a_n45_n107# s4 0.20fF
+C34 a_n42_399# s1 0.20fF
+C35 a_n42_399# gnd 0.22fF
+C36 gnd Gnd 0.30fF
+C37 s4 Gnd 2.45fF
+C38 a_n45_n107# Gnd 0.59fF
+C39 vdd Gnd 0.44fF
+C40 p4 Gnd 1.40fF
+C41 c3 Gnd 0.56fF
+C42 s3 Gnd 2.45fF
+C43 a_n44_48# Gnd 0.59fF
+C44 p3 Gnd 1.40fF
+C45 c2 Gnd 0.21fF
+C46 s2 Gnd 2.45fF
+C47 a_n42_226# Gnd 0.59fF
+C48 p2 Gnd 1.40fF
+C49 c1 Gnd 0.20fF
+C50 s1 Gnd 2.45fF
+C51 a_n42_399# Gnd 0.59fF
+C52 p1 Gnd 1.40fF
+C53 c0 Gnd 0.20fF
+
+.tran 0.1n 32n
+
+.control
+
+run
+set curplottitle="Sanjana Sheela - 20231012027- postlayout"
+plot v(c0) v(c1)+2 v(c2)+4 (c3)+6 
+plot v(p1) v(p2)+2 v(p3)+4 (p4)+6 
+plot v(s1) v(s2)+2 v(s3)+4 (s4)+6 
+
+.endc
+.end
+
