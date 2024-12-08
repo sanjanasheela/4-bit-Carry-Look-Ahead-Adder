@@ -1,0 +1,93 @@
+* Propagate and Generate Block
+.include TSMC_180nm.txt
+
+.param LAMBDA=0.09u
+.param SUPPLY=1.8
+.param width=1.8u
+.param Wp = 2*width
+.param Wn = width
+.global gnd vdd
+
+Vdd vdd gnd 'SUPPLY'
+Va1 a1 gnd pulse(0 1.8 2n 0 0 2n 4n)
+Va2 a2 gnd pulse(0 1.8 2n 0 0 4n 8n)
+Va3 a3 gnd pulse(0 1.8 2n 0 0 8n 16n)
+Va4 a4 gnd pulse(0 1.8 2n 0 0 16n 32n)
+
+Vb1 b1 gnd pulse(0 1.8 2n 0 0 16n 32n)
+Vb2 b2 gnd pulse(0 1.8 2n 0 0 8n 16n)
+Vb3 b3 gnd pulse(0 1.8 2n 0 0 4n 8n)
+Vb4 b4 gnd pulse(0 1.8 2n 0 0 2n 4n)
+
+
+.subckt and y_bar a b vdd gnd
+M1 y a vdd vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M3 y b vdd vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M2 y a w gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+M4 w b gnd gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+X1 y_bar y vdd gnd inv
+.ends
+
+.subckt xor y a b vdd gnd
+X1 b_bar b vdd gnd inv
+M1 y b a vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M2 y b_bar a gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+M3 y a b vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M4 y a b_bar gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+.ends
+
+.subckt inv y x vdd gnd 
+M1 y x vdd vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M2 y x gnd gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+.ends
+
+*propogates
+X1 p1 a1 b1 vdd gnd xor
+X2 p2 a2 b2 vdd gnd xor
+X3 p3 a3 b3 vdd gnd xor
+X4 p4 a4 b4 vdd gnd xor
+
+* generates
+X5 g1 a1 b1 vdd gnd and
+X6 g2 a2 b2 vdd gnd and
+X7 g3 a3 b3 vdd gnd and
+X8 g4 a4 b4 vdd gnd and
+
+.tran 0.1n 40n
+
+.control
+
+run
+set curplottitle="Sanjana Sheela - 20231012027- prelayout"
+plot v(a1) v(b1)+2 v(p1)+4
+plot v(a2) v(b2)+2 v(p2)+4
+plot v(a3) v(b3)+2 v(p3)+4
+plot v(a4) v(b4)+2 v(p4)+4
+
+plot v(a1) v(b1)+2 v(g1)+4
+plot v(a2) v(b2)+2 v(g2)+4
+plot v(a3) v(b3)+2 v(g3)+4
+plot v(a4) v(b4)+2 v(g4)+4
+
+.endc
+.end

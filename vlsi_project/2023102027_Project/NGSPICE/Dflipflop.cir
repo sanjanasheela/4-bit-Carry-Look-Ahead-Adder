@@ -1,0 +1,74 @@
+* Prelayout
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+.param SUPPLY=1.8
+.param width=1.8u
+.param wp=2*width
+.param wn=width
+.global gnd vdd
+
+Vdd vdd gnd 'SUPPLY'
+Vclk clk 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk1 clk1 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk2 clk2 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vclk3 clk3 0 pulse(0 1.8 4n 0 0 1n 2n)
+Vd d gnd pulse(1.8 0 3n 0 0 2n 4n)  
+
+.subckt inv x y vdd gnd 
+M1 Y X vdd vdd CMOSP W={Wp} L={2*LAMBDA} 
++AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp} 
++AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+M2 Y X gnd gnd CMOSN W={Wn} L={2*LAMBDA} 
++AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+.ends
+
+M1 c d vdd vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M2 out clk c vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M3 out d gnd gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+M4 k out vdd vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M5 f clk k vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M6 f out gnd gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+M7 g f vdd vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M8 g clk h gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+M9 h f gnd gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+M10 q g vdd vdd CMOSP W={wp} L={2*LAMBDA} 
++AS={5*wp*LAMBDA} PS={10*LAMBDA+2*wp} 
++AD={5*wp*LAMBDA} PD={10*LAMBDA+2*wp}
+M11  q clk in gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+M12 in g gnd gnd CMOSN W={wn} L={2*LAMBDA} 
++AS={5*wn*LAMBDA} PS={10*LAMBDA+2*wn} 
++AD={5*wn*LAMBDA} PD={10*LAMBDA+2*wn}
+Xinv1 q out_not vdd gnd inv
+Xinv2 out_not q_out vdd gnd inv
+
+.measure tran delays0 TRIG v(clk) VAL=0.9 RISE=1 TARG v(q_out) VAL=0.9 rise=1
+.measure tran delays0 TRIG v(clk) VAL=0.9 RISE=2 TARG v(q_out) VAL=0.9 fall=1
+.tran 0.1n 10n
+.control
+run
+set curplottitle="Sanjana Sheela - 20231012027- prelayout"
+
+plot v(clk)+4 v(d)+2 v(q_out)
+.endc
+.end
